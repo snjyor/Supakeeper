@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "supakeeper"
+version = "1.0.0"
+description = "Keep multiple Supabase projects active and prevent them from being paused"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Jeffrey" }
+]
+keywords = ["supabase", "database", "keepalive", "automation"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "supabase>=2.10.0",
+    "python-dotenv>=1.0.0",
+    "schedule>=1.2.2",
+    "rich>=13.9.0",
+    "typer>=0.15.0",
+    "httpx>=0.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+]
+
+[project.scripts]
+supakeeper = "supakeeper.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/supakeeper"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+

@@ -1,0 +1,16 @@
+# Supakeeper - Supabase Keep-Alive Service
+# Python 3.9+ required
+
+# Core dependencies
+supabase>=2.10.0
+python-dotenv>=1.0.0
+schedule>=1.2.2
+rich>=13.9.0
+typer>=0.15.0
+httpx>=0.28.0
+
+# Development dependencies (optional)
+# pytest>=8.0.0
+# pytest-asyncio>=0.24.0
+# pytest-cov>=6.0.0
+
