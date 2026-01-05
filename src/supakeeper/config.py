@@ -45,6 +45,8 @@ class Config:
     log_level: str = "INFO"
     log_file: str = "logs/supakeeper.log"
     webhook_url: Optional[str] = None
+    telegram_bot_token: Optional[str] = None
+    telegram_chat_id: Optional[str] = None
     console_output: bool = True
     
     @classmethod
@@ -104,6 +106,8 @@ class Config:
             log_level=os.getenv("LOG_LEVEL", "INFO").upper(),
             log_file=os.getenv("LOG_FILE", "logs/supakeeper.log"),
             webhook_url=os.getenv("WEBHOOK_URL"),
+            telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN"),
+            telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID"),
             console_output=os.getenv("CONSOLE_OUTPUT", "true").lower() == "true",
         )
     

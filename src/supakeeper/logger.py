@@ -121,7 +121,7 @@ class SupakeeperLogger:
         if self.console_output:
             console.print()
             console.print("[bold cyan]╔═══════════════════════════════════════════╗[/]")
-            console.print("[bold cyan]║[/]   [bold green]Supakeeper[/] - Keep Supabase Alive      [bold cyan]║[/]")
+            console.print("[bold cyan]║[/]   [bold green]Supakeeper[/]  -  Keep Supabase Alive      [bold cyan]║[/]")
             console.print("[bold cyan]╚═══════════════════════════════════════════╝[/]")
             console.print()
     

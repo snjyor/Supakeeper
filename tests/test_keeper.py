@@ -86,14 +86,12 @@ class TestSupaKeeper:
         assert "test_table" in result.message
     
     @patch("supakeeper.keeper.create_client")
-    def test_ping_project_rest_fallback(self, mock_create_client):
-        """Test falling back to REST API ping."""
-        import httpx
-        
-        # Setup mocks to fail table queries but succeed on auth
+    def test_ping_project_auth_users_fallback(self, mock_create_client):
+        """Test falling back to auth.users query."""
+        # Setup mocks to fail table queries but succeed on auth admin
         mock_client = MagicMock()
         mock_client.table.side_effect = Exception("No table")
-        mock_client.auth.get_session.return_value = MagicMock()  # This should succeed
+        mock_client.auth.admin.list_users.return_value = MagicMock()  # This should succeed
         mock_create_client.return_value = mock_client
         
         config = Config(
@@ -112,7 +110,7 @@ class TestSupaKeeper:
         result = keeper._ping_project(config.projects[0])
         
         assert result.success is True
-        assert "auth session" in result.message
+        assert "auth.users" in result.message
     
     def test_ping_all_empty_projects(self):
         """Test pinging with no projects configured."""

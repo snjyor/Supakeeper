@@ -15,7 +15,7 @@ Supabase 免费版项目如果 **7 天内没有任何活动**，会被自动暂�
 - ⏰ **灵活调度** - 可配置的检查间隔（默认每48小时）
 - 🔀 **并发处理** - 并行 ping 多个项目，提高效率
 - 📝 **详细日志** - 文件和控制台日志，便于监控
-- 🔔 **通知支持** - 支持 Discord/Slack Webhook 通知
+- 🔔 **通知支持** - 支持 Telegram Bot / Discord / Slack 通知
 - 🛡️ **多重策略** - 多种保活策略，确保可靠性
 - 🔐 **安全配置** - 使用 .env 文件存储敏感凭据
 - 🖥️ **CLI 工具** - 简洁的命令行界面
@@ -172,8 +172,16 @@ LOG_FILE=logs/supakeeper.log
 
 # 控制台输出
 CONSOLE_OUTPUT=true
+```
 
-# Webhook 通知 URL（可选）
+### 通知设置
+
+```bash
+# Telegram Bot 通知（推荐）
+TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+TELEGRAM_CHAT_ID=123456789
+
+# Webhook 通知 URL（Discord, Slack 等）
 WEBHOOK_URL=https://discord.com/api/webhooks/xxx/yyy
 ```
 
@@ -257,6 +265,40 @@ def handler(event, context):
 
 ## 🔔 通知配置
 
+### Telegram Bot（推荐）
+
+**步骤 1: 创建机器人**
+1. 在 Telegram 中找到 [@BotFather](https://t.me/botfather)
+2. 发送 `/newbot` 创建新机器人
+3. 复制获得的 Bot Token（格式: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`）
+
+**步骤 2: 获取 Chat ID**
+
+> ⚠️ `chat_id` 是你与机器人对话的 ID，不是机器人的用户名！
+
+1. 在 Telegram 中搜索你刚创建的机器人
+2. **向机器人发送任意消息**（如 `/start` 或 `hello`）
+3. 在浏览器中访问：
+   ```
+   https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+   ```
+4. 在返回的 JSON 中找到 `chat` 对象：
+   ```json
+   "chat":{"id":123456789,"first_name":"Your Name"...}
+   ```
+5. 这个 `id`（如 `123456789`）就是你的 `TELEGRAM_CHAT_ID`
+
+**步骤 3: 配置 `.env`**
+
+```bash
+TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+TELEGRAM_CHAT_ID=123456789
+```
+
+> 💡 如果要发送到群组，先把机器人加入群组并在群组中发送消息，然后用同样方法获取群组的 chat_id（通常是负数）
+
+参考: [Telegram Bot API - sendMessage](https://core.telegram.org/bots/api#sendmessage)
+
 ### Discord Webhook
 
 1. 在 Discord 服务器中创建 Webhook
@@ -270,6 +312,8 @@ WEBHOOK_URL=https://discord.com/api/webhooks/xxx/yyy
 ### Slack Webhook
 
 同样支持 Slack Incoming Webhooks。
+
+> 💡 你可以同时配置 Telegram 和 Webhook，两个通知渠道会同时发送。
 
 ## 🧪 测试
 
