@@ -1,6 +1,11 @@
 name: Supakeeper - Keep Supabase Projects Alive
 
 on:
+  # Trigger on push to main branch (including merges)
+  push:
+    branches:
+      - main
+  
   schedule:
     # Every Sunday and Wednesday at 00:00 UTC
     # Sunday = 0, Wednesday = 3 (UTC)
