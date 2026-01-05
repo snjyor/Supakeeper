@@ -5,59 +5,63 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-## 📋 背景
+<p align="center">
+  <a href="README.md">English</a> | <a href="README_ZH.md">中文</a>
+</p>
 
-Supabase 免费版项目如果 **7 天内没有任何活动**，会被自动暂停。Supakeeper 通过定期对你的 Supabase 项目执行轻量级操作来保持项目活跃，防止被暂停。
+## 📋 Background
 
-## ✨ 特性
+Supabase free-tier projects are **automatically paused after 7 days of inactivity**. Supakeeper keeps your projects active by periodically performing lightweight operations on your Supabase projects.
 
-- 🔄 **多项目支持** - 同时管理多个 Supabase 项目
-- ⏰ **灵活调度** - 可配置的检查间隔（默认每48小时）
-- 🔀 **并发处理** - 并行 ping 多个项目，提高效率
-- 📝 **详细日志** - 文件和控制台日志，便于监控
-- 🔔 **通知支持** - 支持 Telegram Bot / Discord / Slack 通知
-- 🛡️ **多重策略** - 多种保活策略，确保可靠性
-- 🔐 **安全配置** - 使用 .env 文件存储敏感凭据
-- 🖥️ **CLI 工具** - 简洁的命令行界面
+## ✨ Features
 
-## 🚀 快速开始
+- 🔄 **Multi-project Support** - Manage multiple Supabase projects simultaneously
+- ⏰ **Flexible Scheduling** - Configurable check interval (default: every 48 hours)
+- 🔀 **Concurrent Processing** - Ping multiple projects in parallel for efficiency
+- 📝 **Detailed Logging** - File and console logs for easy monitoring
+- 🔔 **Notifications** - Support for Telegram Bot / Discord / Slack notifications
+- 🛡️ **Multiple Strategies** - Various keep-alive strategies for reliability
+- 🔐 **Secure Configuration** - Store sensitive credentials in .env file
+- 🖥️ **CLI Tool** - Clean command-line interface
 
-### 安装
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
-# 克隆仓库
+# Clone the repository
 git clone https://github.com/yourusername/supakeeper.git
 cd supakeeper
 
-# 创建虚拟环境
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
-# 或 .\venv\Scripts\activate  # Windows
+# or .\venv\Scripts\activate  # Windows
 
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 或使用 pip 安装为包
+# Or install as a package
 pip install -e .
 ```
 
-### 配置
+### Configuration
 
-1. **复制配置文件**
+1. **Copy the configuration file**
 
 ```bash
 cp env.example .env
 ```
 
-2. **编辑 `.env` 文件**
+2. **Edit the `.env` file**
 
 ```bash
-# 单个项目
+# Single project
 SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_KEY=your-anon-key-here
 SUPABASE_NAME=My Project
 
-# 或多个项目
+# Or multiple projects
 SUPABASE_URL_1=https://project1.supabase.co
 SUPABASE_KEY_1=key1
 SUPABASE_NAME_1=Project 1
@@ -67,76 +71,57 @@ SUPABASE_KEY_2=key2
 SUPABASE_NAME_2=Project 2
 ```
 
-3. **获取 Supabase 凭据**
+3. **Get Supabase Credentials**
 
-   - 登录 [Supabase Dashboard](https://supabase.com/dashboard)
-   - 选择你的项目
-   - 进入 Settings → API
-   - 复制 `Project URL` 和 `anon` key
+   - Log in to [Supabase Dashboard](https://supabase.com/dashboard)
+   - Select your project
+   - Go to Settings → API
+   - Copy `Project URL` and `anon` key
 
-### 使用
-
-```bash
-# 运行一次检查
-supakeeper run --once
-
-# 作为守护进程运行（持续）
-supakeeper run
-
-# 查看配置状态
-supakeeper status
-
-# 验证配置
-supakeeper validate
-
-# 手动 ping 特定项目
-supakeeper ping --project "My Project"
-```
-
-### 直接使用 Python
+### Usage
 
 ```bash
-# 运行一次
+# Run once
 python main.py
 
-# 守护进程模式
+# Daemon mode
 python main.py --daemon
 ```
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 supakeeper/
 ├── src/supakeeper/
-│   ├── __init__.py     # 包入口
-│   ├── cli.py          # 命令行界面
-│   ├── config.py       # 配置管理
-│   ├── keeper.py       # 核心保活逻辑
-│   ├── logger.py       # 日志系统
-│   ├── notifier.py     # 通知系统
-│   └── scheduler.py    # 调度器
-├── tests/              # 测试文件
-├── logs/               # 日志文件
-├── env.example         # 配置示例
-├── main.py             # 直接运行入口
-├── pyproject.toml      # 项目配置
-└── requirements.txt    # 依赖列表
+│   ├── __init__.py     # Package entry
+│   ├── cli.py          # Command-line interface
+│   ├── config.py       # Configuration management
+│   ├── keeper.py       # Core keep-alive logic
+│   ├── logger.py       # Logging system
+│   ├── notifier.py     # Notification system
+│   └── scheduler.py    # Scheduler
+├── tests/              # Test files
+├── logs/               # Log files
+├── env.example         # Configuration example
+├── main.py             # Direct run entry
+├── pyproject.toml      # Project configuration
+└── requirements.txt    # Dependencies
 ```
 
-## ⚙️ 配置选项
+## ⚙️ Configuration Options
 
-所有配置通过 `.env` 文件或环境变量设置：
+All configuration is done via `.env` file or environment variables:
 
-### 单个项目
+### Single Project
 
 ```bash
 SUPABASE_URL=https://xxx.supabase.co
 SUPABASE_KEY=your-anon-key
-SUPABASE_NAME=My Project          # 可选，默认 "Default Project"
-SUPABASE_TABLE=my_table           # 可选，指定查询的表
+SUPABASE_NAME=My Project          # Optional, defaults to "Default Project"
+SUPABASE_TABLE=my_table           # Optional, specific table to query
 ```
 
-### 多个项目
+### Multiple Projects
 
 ```bash
 # Project 1
@@ -148,83 +133,78 @@ SUPABASE_NAME_1=Project One
 SUPABASE_URL_2=https://project2.supabase.co
 SUPABASE_KEY_2=key2
 SUPABASE_NAME_2=Project Two
+SUPABASE_TABLE_2=my_table
 
-# Project 3, 4, 5... 以此类推
+# Project 3, 4, 5... and so on
 ```
 
-### 调度和日志设置
+### Scheduling and Logging Settings
 
 ```bash
-# 检查间隔（小时），Supabase 7天暂停，48小时是安全值
+# Check interval (hours), Supabase pauses after 7 days, 48 hours is safe
 KEEPALIVE_INTERVAL_HOURS=48
 
-# 失败重试次数
+# Number of retry attempts
 RETRY_ATTEMPTS=3
 
-# 重试延迟（秒）
+# Retry delay (seconds)
 RETRY_DELAY=30
 
-# 日志级别: DEBUG, INFO, WARNING, ERROR
+# Log level: DEBUG, INFO, WARNING, ERROR
 LOG_LEVEL=INFO
 
-# 日志文件路径
+# Log file path
 LOG_FILE=logs/supakeeper.log
 
-# 控制台输出
+# Console output
 CONSOLE_OUTPUT=true
 ```
 
-### 通知设置
+### Notification Settings
 
 ```bash
-# Telegram Bot 通知（推荐）
+# Telegram Bot notifications (recommended)
 TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
 TELEGRAM_CHAT_ID=123456789
 
-# Webhook 通知 URL（Discord, Slack 等）
+# Webhook URL for notifications (Discord, Slack, etc.)
 WEBHOOK_URL=https://discord.com/api/webhooks/xxx/yyy
 ```
 
-## 🔧 部署方式
+## 🔧 Deployment
 
-### 1. 本地 Cron Job
+### 1. Local Cron Job
 
 ```bash
-# 编辑 crontab
+# Edit crontab
 crontab -e
 
-# 每天运行两次（0:00 和 12:00）
+# Run twice daily (00:00 and 12:00)
 0 0,12 * * * cd /path/to/supakeeper && /path/to/venv/bin/python main.py >> /path/to/supakeeper/logs/cron.log 2>&1
 ```
 
 ### 2. Docker
 
-```dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY . .
-RUN pip install -r requirements.txt
-
-CMD ["python", "main.py", "--daemon"]
-```
-
 ```bash
+# Using docker-compose (recommended)
+docker-compose up -d
+
+# Or build and run manually
 docker build -t supakeeper .
 docker run -d --name supakeeper --env-file .env supakeeper
 ```
 
 ### 3. GitHub Actions
 
-创建 `.github/workflows/supakeeper.yml`:
+Create `.github/workflows/supakeeper.yml`:
 
 ```yaml
 name: Supakeeper
 
 on:
   schedule:
-    - cron: '0 0 * * 0,3'  # 每周日和周三运行
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 0 * * 0,3'  # Run every Sunday and Wednesday
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   keepalive:
@@ -244,14 +224,13 @@ jobs:
         env:
           SUPABASE_URL_1: ${{ secrets.SUPABASE_URL_1 }}
           SUPABASE_KEY_1: ${{ secrets.SUPABASE_KEY_1 }}
-          SUPABASE_URL_2: ${{ secrets.SUPABASE_URL_2 }}
-          SUPABASE_KEY_2: ${{ secrets.SUPABASE_KEY_2 }}
+          # ... add more as needed
         run: python main.py
 ```
 
-### 4. 云函数 (AWS Lambda / Vercel / Cloudflare Workers)
+### 4. Serverless (AWS Lambda / Vercel / Cloudflare Workers)
 
-可以轻松适配到各种 Serverless 平台，只需调用核心函数：
+Easily adapt to various serverless platforms by calling the core function:
 
 ```python
 from supakeeper import SupaKeeper, Config
@@ -263,47 +242,47 @@ def handler(event, context):
     return {"success": success, "failed": failed}
 ```
 
-## 🔔 通知配置
+## 🔔 Notification Configuration
 
-### Telegram Bot（推荐）
+### Telegram Bot (Recommended)
 
-**步骤 1: 创建机器人**
-1. 在 Telegram 中找到 [@BotFather](https://t.me/botfather)
-2. 发送 `/newbot` 创建新机器人
-3. 复制获得的 Bot Token（格式: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`）
+**Step 1: Create a Bot**
+1. Find [@BotFather](https://t.me/botfather) on Telegram
+2. Send `/newbot` to create a new bot
+3. Copy the Bot Token (format: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`)
 
-**步骤 2: 获取 Chat ID**
+**Step 2: Get Chat ID**
 
-> ⚠️ `chat_id` 是你与机器人对话的 ID，不是机器人的用户名！
+> ⚠️ `chat_id` is the ID of your conversation with the bot, not the bot's username!
 
-1. 在 Telegram 中搜索你刚创建的机器人
-2. **向机器人发送任意消息**（如 `/start` 或 `hello`）
-3. 在浏览器中访问：
+1. Search for your newly created bot on Telegram
+2. **Send any message to the bot** (e.g., `/start` or `hello`)
+3. Visit in your browser:
    ```
    https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
    ```
-4. 在返回的 JSON 中找到 `chat` 对象：
+4. Find the `chat` object in the returned JSON:
    ```json
    "chat":{"id":123456789,"first_name":"Your Name"...}
    ```
-5. 这个 `id`（如 `123456789`）就是你的 `TELEGRAM_CHAT_ID`
+5. This `id` (e.g., `123456789`) is your `TELEGRAM_CHAT_ID`
 
-**步骤 3: 配置 `.env`**
+**Step 3: Configure `.env`**
 
 ```bash
 TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
 TELEGRAM_CHAT_ID=123456789
 ```
 
-> 💡 如果要发送到群组，先把机器人加入群组并在群组中发送消息，然后用同样方法获取群组的 chat_id（通常是负数）
+> 💡 To send to a group, add the bot to the group, send a message in the group, then use the same method to get the group's chat_id (usually a negative number)
 
-参考: [Telegram Bot API - sendMessage](https://core.telegram.org/bots/api#sendmessage)
+Reference: [Telegram Bot API - sendMessage](https://core.telegram.org/bots/api#sendmessage)
 
 ### Discord Webhook
 
-1. 在 Discord 服务器中创建 Webhook
-2. 复制 Webhook URL
-3. 在 `.env` 中设置：
+1. Create a Webhook in your Discord server
+2. Copy the Webhook URL
+3. Set in `.env`:
 
 ```bash
 WEBHOOK_URL=https://discord.com/api/webhooks/xxx/yyy
@@ -311,50 +290,51 @@ WEBHOOK_URL=https://discord.com/api/webhooks/xxx/yyy
 
 ### Slack Webhook
 
-同样支持 Slack Incoming Webhooks。
+Also supports Slack Incoming Webhooks.
 
-> 💡 你可以同时配置 Telegram 和 Webhook，两个通知渠道会同时发送。
+> 💡 You can configure both Telegram and Webhook simultaneously - both notification channels will send.
 
-## 🧪 测试
+## 🧪 Testing
 
 ```bash
-# 安装测试依赖
+# Install test dependencies
 pip install pytest pytest-asyncio pytest-cov
 
-# 运行测试
+# Run tests
 pytest
 
-# 带覆盖率
+# With coverage
 pytest --cov=supakeeper
 ```
 
-## 📊 保活策略
+## 📊 Keep-Alive Strategies
 
-Supakeeper 使用多重策略确保项目活跃：
+Supakeeper uses multiple strategies to ensure projects stay active:
 
-1. **表查询** - 如果配置了特定表（SUPABASE_TABLE），查询该表
-2. **健康检查表** - 尝试查询 `_supakeeper_health` 表
-3. **Auth 会话检查** - 检查认证会话状态
-4. **REST API Ping** - 直接请求 PostgREST API
+1. **Table Query** - If a specific table is configured (SUPABASE_TABLE), query that table
+2. **Auth Users Query** - Query the `auth.users` table
+3. **Auth Session Check** - Check authentication session status
+4. **REST API Ping** - Direct request to PostgREST API
 
-任何一种策略成功即表示项目活跃。
+Any successful strategy indicates the project is active.
 
-## ⚠️ 注意事项
+## ⚠️ Notes
 
-- 免费版 Supabase 项目 **7 天**无活动会被暂停
-- 建议设置检查间隔为 **48-72 小时**
-- 暂停后 **90 天内**可以恢复项目
-- 使用 `anon` key 即可，无需 `service_role` key
-- `.env` 文件包含敏感信息，请勿提交到版本控制
+- Free-tier Supabase projects pause after **7 days** of inactivity
+- Recommended check interval: **48-72 hours**
+- Projects can be restored within **90 days** after pausing
+- Use `anon` key only, no need for `service_role` key
+- `.env` file contains sensitive information - do not commit to version control
 
-## 📄 许可证
+## 📄 License
 
-MIT License - 详见 [LICENSE](LICENSE)
+MIT License - See [LICENSE](LICENSE)
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
 ---
 
-**⭐ 如果这个项目对你有帮助，请给个 Star！**
+**⭐ If this project helps you, please give it a Star!**
+

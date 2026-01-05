@@ -1,0 +1,76 @@
+name: Supakeeper - Keep Supabase Projects Alive
+
+on:
+  schedule:
+    # Every Sunday and Wednesday at 00:00 UTC
+    # Sunday = 0, Wednesday = 3 (UTC)
+    - cron: '0 0 * * 0,3'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    name: Ping Supabase Projects
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run Supakeeper
+        env:
+          # Project 1
+          SUPABASE_URL_1: ${{ secrets.SUPABASE_URL_1 }}
+          SUPABASE_KEY_1: ${{ secrets.SUPABASE_KEY_1 }}
+          SUPABASE_NAME_1: ${{ secrets.SUPABASE_NAME_1 }}
+          # Project 2
+          SUPABASE_URL_2: ${{ secrets.SUPABASE_URL_2 }}
+          SUPABASE_KEY_2: ${{ secrets.SUPABASE_KEY_2 }}
+          SUPABASE_NAME_2: ${{ secrets.SUPABASE_NAME_2 }}
+          # Project 3
+          SUPABASE_URL_3: ${{ secrets.SUPABASE_URL_3 }}
+          SUPABASE_KEY_3: ${{ secrets.SUPABASE_KEY_3 }}
+          SUPABASE_NAME_3: ${{ secrets.SUPABASE_NAME_3 }}
+          # Project 4
+          SUPABASE_URL_4: ${{ secrets.SUPABASE_URL_4 }}
+          SUPABASE_KEY_4: ${{ secrets.SUPABASE_KEY_4 }}
+          SUPABASE_NAME_4: ${{ secrets.SUPABASE_NAME_4 }}
+          # Project 5
+          SUPABASE_URL_5: ${{ secrets.SUPABASE_URL_5 }}
+          SUPABASE_KEY_5: ${{ secrets.SUPABASE_KEY_5 }}
+          SUPABASE_NAME_5: ${{ secrets.SUPABASE_NAME_5 }}
+          # Project 6
+          SUPABASE_URL_6: ${{ secrets.SUPABASE_URL_6 }}
+          SUPABASE_KEY_6: ${{ secrets.SUPABASE_KEY_6 }}
+          SUPABASE_NAME_6: ${{ secrets.SUPABASE_NAME_6 }}
+          # Project 7
+          SUPABASE_URL_7: ${{ secrets.SUPABASE_URL_7 }}
+          SUPABASE_KEY_7: ${{ secrets.SUPABASE_KEY_7 }}
+          SUPABASE_NAME_7: ${{ secrets.SUPABASE_NAME_7 }}
+          # Notification settings (optional)
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          # Other settings
+          LOG_LEVEL: INFO
+          CONSOLE_OUTPUT: 'true'
+        run: python main.py
+      
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supakeeper-logs-${{ github.run_number }}
+          path: logs/
+          retention-days: 7
+
