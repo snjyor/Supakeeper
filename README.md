@@ -196,37 +196,27 @@ docker run -d --name supakeeper --env-file .env supakeeper
 
 ### 3. GitHub Actions
 
-Create `.github/workflows/supakeeper.yml`:
+This repository includes a pre-configured workflow file `.github/workflows/supakeeper.yml`.
 
-```yaml
-name: Supakeeper
+**Setup Steps:**
 
-on:
-  schedule:
-    - cron: '0 0 * * 0,3'  # Run every Sunday and Wednesday
-  workflow_dispatch:  # Allow manual trigger
+1. Go to your GitHub repository: `Settings → Environments → New environment`
+2. Create an environment named **`SUPABASE KEY`** (must match the `environment` name in workflow)
+3. Add secrets in this environment:
 
-jobs:
-  keepalive:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      
-      - name: Run Supakeeper
-        env:
-          SUPABASE_URL_1: ${{ secrets.SUPABASE_URL_1 }}
-          SUPABASE_KEY_1: ${{ secrets.SUPABASE_KEY_1 }}
-          # ... add more as needed
-        run: python main.py
-```
+| Secret Name | Description |
+|------------|-------------|
+| `SUPABASE_URL_1` | Project 1 URL |
+| `SUPABASE_KEY_1` | Project 1 anon key |
+| `SUPABASE_NAME_1` | Project 1 name (optional) |
+| `SUPABASE_URL_2` | Project 2 URL |
+| `SUPABASE_KEY_2` | Project 2 anon key |
+| ... | Up to 7 projects supported |
+| `TELEGRAM_BOT_TOKEN` | Telegram Bot token (optional) |
+| `TELEGRAM_CHAT_ID` | Telegram Chat ID (optional) |
+| `WEBHOOK_URL` | Discord/Slack webhook (optional) |
+
+> ⚠️ **Important**: The environment name `SUPABASE KEY` must exactly match the `environment:` field in the workflow file. You can use a different name, but make sure both match.
 
 ### 4. Serverless (AWS Lambda / Vercel / Cloudflare Workers)
 

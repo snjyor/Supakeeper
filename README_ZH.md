@@ -195,38 +195,27 @@ docker run -d --name supakeeper --env-file .env supakeeper
 
 ### 3. GitHub Actions
 
-创建 `.github/workflows/supakeeper.yml`:
+本仓库已包含预配置的工作流文件 `.github/workflows/supakeeper.yml`。
 
-```yaml
-name: Supakeeper
+**配置步骤：**
 
-on:
-  schedule:
-    - cron: '0 0 * * 0,3'  # 每周日和周三运行
-  workflow_dispatch:  # 允许手动触发
+1. 进入 GitHub 仓库：`Settings → Environments → New environment`
+2. 创建一个名为 **`SUPABASE KEY`** 的环境（必须与 workflow 中的 `environment` 名称一致）
+3. 在此环境中添加 secrets：
 
-jobs:
-  keepalive:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      
-      - name: Run Supakeeper
-        env:
-          SUPABASE_URL_1: ${{ secrets.SUPABASE_URL_1 }}
-          SUPABASE_KEY_1: ${{ secrets.SUPABASE_KEY_1 }}
-          SUPABASE_URL_2: ${{ secrets.SUPABASE_URL_2 }}
-          SUPABASE_KEY_2: ${{ secrets.SUPABASE_KEY_2 }}
-        run: python main.py
-```
+| Secret 名称 | 说明 |
+|------------|------|
+| `SUPABASE_URL_1` | 项目 1 的 URL |
+| `SUPABASE_KEY_1` | 项目 1 的 anon key |
+| `SUPABASE_NAME_1` | 项目 1 的名称（可选） |
+| `SUPABASE_URL_2` | 项目 2 的 URL |
+| `SUPABASE_KEY_2` | 项目 2 的 anon key |
+| ... | 最多支持 7 个项目 |
+| `TELEGRAM_BOT_TOKEN` | Telegram Bot token（可选） |
+| `TELEGRAM_CHAT_ID` | Telegram Chat ID（可选） |
+| `WEBHOOK_URL` | Discord/Slack webhook（可选） |
+
+> ⚠️ **重要提示**：环境名称 `SUPABASE KEY` 必须与 workflow 文件中的 `environment:` 字段完全一致。你可以使用其他名称，但两处必须保持一致。
 
 ### 4. 云函数 (AWS Lambda / Vercel / Cloudflare Workers)
 

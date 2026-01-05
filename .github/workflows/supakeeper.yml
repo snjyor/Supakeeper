@@ -18,6 +18,7 @@ jobs:
   keepalive:
     name: Ping Supabase Projects
     runs-on: ubuntu-latest
+    environment: SUPABASE KEY
     
     steps:
       - name: Checkout repository
