@@ -43,8 +43,8 @@ class SupaKeeper:
     to prevent them from being paused due to inactivity.
     """
     
-    # Table name for health checks
-    HEALTH_TABLE = "_supakeeper_health"
+    # Default table for health checks (Supabase auth.users is always available)
+    AUTH_USERS_TABLE = "users"  # In auth schema
     
     def __init__(self, config: Optional[Config] = None) -> None:
         """
@@ -59,7 +59,16 @@ class SupaKeeper:
             log_level=self.config.log_level,
             console_output=self.config.console_output,
         )
-        self.notifier = Notifier(self.config.webhook_url) if self.config.webhook_url else None
+        # Initialize notifier if any notification channel is configured
+        has_notifications = (
+            self.config.webhook_url or 
+            (self.config.telegram_bot_token and self.config.telegram_chat_id)
+        )
+        self.notifier = Notifier(
+            webhook_url=self.config.webhook_url,
+            telegram_bot_token=self.config.telegram_bot_token,
+            telegram_chat_id=self.config.telegram_chat_id,
+        ) if has_notifications else None
         self._clients: dict[str, Client] = {}
     
     def _get_client(self, project: ProjectConfig) -> Client:
@@ -100,18 +109,21 @@ class SupaKeeper:
                         response_time_ms=elapsed_ms,
                     )
                 
-                # Strategy 2: Try the health check table
+                # Strategy 2: Query auth.users table (always exists in Supabase)
                 try:
-                    response = client.table(self.HEALTH_TABLE).select("*").limit(1).execute()
+                    # Use the auth admin API to count users (generates DB activity)
+                    # This queries the auth.users table which always exists
+                    response = client.auth.admin.list_users(per_page=1)
                     elapsed_ms = (time.time() - start_time) * 1000
                     return PingResult(
                         project_name=project.name,
                         success=True,
-                        message=f"Successfully queried health table",
+                        message="Successfully queried auth.users table",
                         response_time_ms=elapsed_ms,
                     )
-                except Exception:
-                    # Table might not exist, try alternative approach
+                except Exception as e:
+                    self.logger.debug(f"Error querying auth.users: {e}", project=project.name)
+                    # May not have admin access, try alternative approach
                     pass
                 
                 # Strategy 3: Use auth.get_user() - this always works if auth is enabled
