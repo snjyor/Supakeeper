@@ -63,6 +63,10 @@ jobs:
           SUPABASE_URL_7: ${{ secrets.SUPABASE_URL_7 }}
           SUPABASE_KEY_7: ${{ secrets.SUPABASE_KEY_7 }}
           SUPABASE_NAME_7: ${{ secrets.SUPABASE_NAME_7 }}
+          # Project 8
+          SUPABASE_URL_8: ${{ secrets.SUPABASE_URL_8 }}
+          SUPABASE_KEY_8: ${{ secrets.SUPABASE_KEY_8 }}
+          SUPABASE_NAME_8: ${{ secrets.SUPABASE_NAME_8 }}
           # Notification settings (optional)
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
